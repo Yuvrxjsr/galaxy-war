@@ -110,10 +110,8 @@ function playStartSound() {
 startButton.addEventListener('click', () => {
     playStartSound();
 
-    // Display the countdown dialog
     countdownDialog.style.display = 'block';
 
-    // Start the countdown from 3 to 1
     setTimeout(() => {
         showCountdown(3);
     }, 0);
@@ -125,7 +123,6 @@ startButton.addEventListener('click', () => {
     setTimeout(() => {
         showCountdown(1);
 
-        // Start the game after the countdown
         setTimeout(() => {
             document.body.classList.add('game-active');
             shuffleArray(words);
@@ -140,8 +137,6 @@ startButton.addEventListener('click', () => {
             }, 1000);
 
             gameActive = true;
-
-            // Hide the countdown dialog
             countdownDialog.style.display = 'none';
         }, 1000);
     }, 2000);
@@ -190,7 +185,7 @@ const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', () => {
     document.body.classList.add('game-active');
     shuffleArray(words);
-    seconds = 9;
+    seconds = 99;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0'); // Format points as two digits
     displayNewWord();
