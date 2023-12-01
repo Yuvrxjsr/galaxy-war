@@ -77,7 +77,9 @@ function updateTimer() {
 
     if (seconds === 0 || words.length === 0) {
         clearInterval(timerInterval);
+        playTimerSound();
         handleGameEnd(true);
+        inputElement.value = '';
     }
 }
 
@@ -138,6 +140,7 @@ startButton.addEventListener('click', () => {
 
             gameActive = true;
             countdownDialog.style.display = 'none';
+            inputElement.value = '';
         }, 1000);
     }, 2000);
 });
@@ -178,6 +181,7 @@ function handleGameEnd() {
         <p>Points: ${score.points}</p>
         <p>Percentage: ${score.percentage}%</p>
     `;
+    inputElement.value = '';
 }
 
 const restartButton = document.querySelector('.restart');
@@ -196,6 +200,7 @@ restartButton.addEventListener('click', () => {
     }, 1000);
 
     gameActive = true;
+    inputElement.value = '';
 });
 
 const correctSound = document.getElementById('correctSound');
