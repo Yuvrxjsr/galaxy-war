@@ -110,23 +110,44 @@ function playStartSound() {
 startButton.addEventListener('click', () => {
     playStartSound();
 
-    document.body.classList.add('game-active');
-    shuffleArray(words);
-    seconds = 99;
-    points = 0;
-    scoreElement.textContent = points.toString().padStart(2, '0');
-    displayNewWord();
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        seconds--;
-        updateTimer();
+    // Display the countdown dialog
+    countdownDialog.style.display = 'block';
+
+    // Start the countdown from 3 to 1
+    setTimeout(() => {
+        showCountdown(3);
+    }, 0);
+
+    setTimeout(() => {
+        showCountdown(2);
     }, 1000);
 
-    gameActive = true;
+    setTimeout(() => {
+        showCountdown(1);
+
+        // Start the game after the countdown
+        setTimeout(() => {
+            document.body.classList.add('game-active');
+            shuffleArray(words);
+            seconds = 99;
+            points = 0;
+            scoreElement.textContent = points.toString().padStart(2, '0');
+            displayNewWord();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                seconds--;
+                updateTimer();
+            }, 1000);
+
+            gameActive = true;
+
+            // Hide the countdown dialog
+            countdownDialog.style.display = 'none';
+        }, 1000);
+    }, 2000);
 });
 
 startAgainButton.addEventListener('click', () => {
-    // Reset the game state
     shuffleArray(words);
     seconds = 99;
     points = 0;
@@ -140,7 +161,6 @@ startAgainButton.addEventListener('click', () => {
 
     gameActive = true;
 
-    // Hide the end game dialog and show the relevant elements
     endGameDialog.style.display = 'none';
     document.body.classList.add('game-active');
 });
@@ -170,7 +190,7 @@ const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', () => {
     document.body.classList.add('game-active');
     shuffleArray(words);
-    seconds = 99;
+    seconds = 9;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0'); // Format points as two digits
     displayNewWord();
@@ -226,3 +246,19 @@ function updateTimer() {
 
 timerSound.preload = 'auto';
 timerSound.load();
+
+const countdownDialog = document.querySelector('.start-timer#countdown-dialog');
+
+function showCountdown(number) {
+    countdownDialog.textContent = number;
+    countdownDialog.style.display = 'block';
+
+    setTimeout(() => {
+        countdownDialog.style.opacity = '0';
+    }, 500);
+
+    setTimeout(() => {
+        countdownDialog.style.display = 'block';
+        countdownDialog.style.opacity = '1';
+    }, 1000);
+}
