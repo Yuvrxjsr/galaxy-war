@@ -1,0 +1,318 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/*-----------Basic Reset---------------*/
+
+* {
+    margin: 0; 
+    padding: 0;
+    outline: 0;
+    border-style: none;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    font: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(100% - 30px, 1200px);
+    margin-inline: auto;
+    height: 100%;
+}
+
+body {
+    background: url(../img/bg-img.jpg) center center / cover no-repeat fixed;
+    font-family: "Press Start 2P";
+}
+
+h1 {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+section {
+    height: calc(100vh - 98.4px);;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-board {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    height: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.timer {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    color: #f0f8ff;
+}
+
+.timer p {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-words {
+    margin-top: 50px;
+    width: 400px;
+    height: 150px;
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    border-radius: 5px;
+    color: #f0f8ff;
+}
+
+.display-words p {
+    height: 100%;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    height: 40px;
+    margin-top: 50px;
+    color: #2149ee;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.restart {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.restart:hover {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    background-size: 400%;
+    z-index: 1;
+    animation: glow 4s linear infinite;
+}
+
+@keyframes glow {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 400%;
+    }
+}
+
+.restart:before {
+    content: '';
+    position: absolute;
+    background: inherit;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: 5px;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.restart:hover:before {
+    opacity: 1;
+    z-index: -1;
+}
+
+.stars-animation {
+    width: 100dvh;
+    height: 0dvh;
+    position: inherit;
+    color: #f0f8ff;
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+    }
+    50% {
+        text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 20px #fff;
+    }
+    100% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+    }
+}
+
+.star-1 {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+}
+
+.star-2 {
+    position: absolute;
+    top: 26%;
+    left: 0%;
+}
+
+.star-3 {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+}
+
+.star-4 {
+    position: absolute;
+    top: 53%;
+    left: 14%;
+}
+
+.star-5 {
+    position: absolute;
+    top: 81%;
+    left: 4%;
+}
+
+.star-6 {
+    position: absolute;
+    top: 5%;
+    left: 73%;
+}
+
+.star-7 {
+    position: absolute;
+    top: 17.8%;
+    left: 76.3%;
+}
+
+.star-8 {
+    position: absolute;
+    top: 41%;
+    left: 89%;
+}
+
+.star-9 {
+    position: absolute;
+    top: 66%;
+    left: 84%;
+}
+
+.star-10 {
+    position: absolute;
+    top: 88%;
+    left: 67%;
+}
+
+.dialog-box {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.dialog-box button {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.dialog-box button:hover {
+    background: linear-gradient(45deg, #2149ee, #9f5598);
+    background-size: 400%;
+    z-index: 1;
+    animation: glow 4s linear infinite;
+}
+
+@keyframes glow {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 400%;
+    }
+}
+
+.dialog-box button:before {
+    content: '';
+    position: absolute;
+    background: inherit;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: 5px;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.dialog-box button:hover:before {
+    opacity: 1;
+    z-index: -1;
+}
+
+/* Show everything except h1 initially */
+.score-board, .timer, .display-words, .input-box, .restart {
+    display: none;
+}
+
+/* Add a class to the body when the game is active */
+body.game-active .score-board, 
+body.game-active .timer, 
+body.game-active .display-words, 
+body.game-active .input-box, 
+body.game-active .restart {
+    display: block;
+}
+
+body.game-active .dialog-box {
+    display: none;
+}
+
+/* Add this CSS for the end game dialog box */
+.dialog-box#end-game-dialog {
+    display: none;
+}
+
+.dialog-box#end-game-dialog p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.dialog-box#end-game-dialog .score-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2149ee;
+}
