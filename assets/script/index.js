@@ -2,29 +2,29 @@
 
 class Score {
     #date;
-    #hits;
+    #points;
     #percentage;
 
-    constructor(date, hits, totalWords) {
+    constructor(date, points, totalWords) {
         this.#date = date;
-        this.#hits = hits;
-        this.#percentage = this.calculatePercentage(hits, totalWords);
+        this.#points = points;
+        this.#percentage = this.calculatePercentage(points, totalWords);
     }
 
     get date() {
         return this.#date;
     }
 
-    get hits() {
-        return this.#hits;
+    get points() {
+        return this.#points;
     }
 
     get percentage() {
         return this.#percentage;
     }
 
-    calculatePercentage(hits, totalWords) {
-        return totalWords === 0 ? 0 : ((hits / totalWords) * 100).toFixed(2);
+    calculatePercentage(points, totalWords) {
+        return totalWords === 0 ? 0 : ((points / totalWords) * 100).toFixed(2);
     }
 }
 
@@ -125,6 +125,26 @@ startButton.addEventListener('click', () => {
     gameActive = true;
 });
 
+startAgainButton.addEventListener('click', () => {
+    // Reset the game state
+    shuffleArray(words);
+    seconds = 99;
+    points = 0;
+    scoreElement.textContent = points.toString().padStart(2, '0');
+    displayNewWord();
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        seconds--;
+        updateTimer();
+    }, 1000);
+
+    gameActive = true;
+
+    // Hide the end game dialog and show the relevant elements
+    endGameDialog.style.display = 'none';
+    document.body.classList.add('game-active');
+});
+
 function handleGameEnd() {
     gameActive = false;
     clearInterval(timerInterval);
@@ -140,13 +160,9 @@ function handleGameEnd() {
 
     scoreDisplay.innerHTML = `
         <p>Date: ${score.date}</p>
-        <p>Hits: ${score.hits}</p>
+        <p>Points: ${score.points}</p>
         <p>Percentage: ${score.percentage}%</p>
     `;
-
-    startAgainButton.addEventListener('click', () => {
-        location.reload();
-    });
 }
 
 const restartButton = document.querySelector('.restart');
