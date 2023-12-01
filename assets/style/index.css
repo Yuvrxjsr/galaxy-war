@@ -111,10 +111,10 @@ input {
     background: linear-gradient(45deg, #2149ee, #9f5598);
     background-size: 400%;
     z-index: 1;
-    animation: glow 4s linear infinite;
+    animation: glow-02 4s linear infinite;
 }
 
-@keyframes glow {
+@keyframes glow-02 {
     0% {
         background-position: 0%;
     }
@@ -147,10 +147,10 @@ input {
     height: 0dvh;
     position: inherit;
     color: #f0f8ff;
-    animation: glow 2s infinite;
+    animation: glow-01 2s infinite;
 }
 
-@keyframes glow {
+@keyframes glow-01 {
     0% {
         text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
     }
@@ -252,10 +252,10 @@ input {
     background: linear-gradient(45deg, #2149ee, #9f5598);
     background-size: 400%;
     z-index: 1;
-    animation: glow 4s linear infinite;
+    animation: glow-02 4s linear infinite;
 }
 
-@keyframes glow {
+@keyframes glow-02 {
     0% {
         background-position: 0%;
     }
