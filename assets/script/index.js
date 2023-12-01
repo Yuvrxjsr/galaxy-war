@@ -56,31 +56,26 @@ function shuffleArray(array) {
     }
 }
 
-// Call the shuffle function before starting the game
 shuffleArray(words);
 
 const displayWordsElement = document.querySelector('.display-words p');
 
-// Function to display a new word
 function displayNewWord() {
-    const currentWord = words.pop(); // Get the last word from the shuffled array
+    const currentWord = words.pop();
     displayWordsElement.textContent = currentWord;
 }
 
-// Call the displayNewWord function when starting the game
 displayNewWord();
 
 const timerElement = document.querySelector('.timer p');
 const scoreElement = document.querySelector('.score-board span');
-let seconds = 99; // Initial time limit
+let seconds = 99;
 let points = 0;
 
-// Function to update the timer and check game end conditions
 function updateTimer() {
     timerElement.textContent = seconds;
 
     if (seconds === 0 || words.length === 0) {
-        // End the game due to the timer
         clearInterval(timerInterval);
         handleGameEnd(true);
     }
@@ -90,11 +85,11 @@ const inputElement = document.querySelector('.input-box input');
 
 inputElement.addEventListener('input', () => {
     handleInput();
-    startTimer(); // Call the startTimer function on input
+    startTimer();
 });
 
-let gameActive = true; // Add a variable to track the game state
-let timerInterval; // Remove const to be able to modify it later
+let gameActive = true;
+let timerInterval;
 
 function startTimer() {
     if (!timerInterval && gameActive) {
@@ -107,19 +102,17 @@ function startTimer() {
 
 const startButton = document.querySelector('#start-button');
 
-// Function to play the start sound
 function playStartSound() {
-    // You can adjust the audio file path and type based on your setup
     const startSound = new Audio('./assets/audio/game-start.mp3');
     startSound.play();
 }
 
 startButton.addEventListener('click', () => {
-    playStartSound(); // Call the function to play the sound
+    playStartSound();
 
     document.body.classList.add('game-active');
     shuffleArray(words);
-    seconds = 10;
+    seconds = 99;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0');
     displayNewWord();
@@ -137,27 +130,21 @@ function handleGameEnd() {
     clearInterval(timerInterval);
     document.body.classList.remove('game-active');
 
-    // Hide the instructions dialog
     const instructionsDialog = document.querySelector('#instructions-dialog');
     instructionsDialog.style.display = 'none';
 
-    // Show the end game dialog
     endGameDialog.style.display = 'block';
 
-    // Create a Score object
     const currentDate = new Date().toLocaleDateString();
     const score = new Score(currentDate, points, words.length);
 
-    // Display the score details in the end dialog
     scoreDisplay.innerHTML = `
         <p>Date: ${score.date}</p>
         <p>Hits: ${score.hits}</p>
         <p>Percentage: ${score.percentage}%</p>
     `;
 
-    // Set up the click event for the "Start Again" button
     startAgainButton.addEventListener('click', () => {
-        // Reload the entire page
         location.reload();
     });
 }
@@ -195,31 +182,28 @@ function handleInput() {
         scoreElement.textContent = points.toString().padStart(2, '0');
         inputElement.value = '';
         displayNewWord();
-        playCorrectSound(); // Call the function to play the sound
+        playCorrectSound();
     }
 }
 
 function playCorrectSound() {
-    correctSound.currentTime = 0; // Reset the audio to the beginning
+    correctSound.currentTime = 0;
     correctSound.play();
 }
 
 const timerSound = new Audio('./assets/audio/death-sound.mp3');
 
-// Function to play the timer sound
 function playTimerSound() {
-    timerSound.currentTime = 0; // Reset the audio to the beginning
+    timerSound.currentTime = 0;
     timerSound.play();
 }
 
-// Function to update the timer and check game end conditions
 function updateTimer() {
     timerElement.textContent = seconds;
 
     if (seconds === 0 || words.length === 0) {
-        // End the game due to the timer
         clearInterval(timerInterval);
-        playTimerSound(); // Play the timer sound
+        playTimerSound();
         handleGameEnd(true);
     }
 }

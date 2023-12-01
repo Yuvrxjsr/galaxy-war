@@ -283,12 +283,10 @@ input {
     z-index: -1;
 }
 
-/* Show everything except h1 initially */
 .score-board, .timer, .display-words, .input-box, .restart {
     display: none;
 }
 
-/* Add a class to the body when the game is active */
 body.game-active .score-board, 
 body.game-active .timer, 
 body.game-active .display-words, 
@@ -301,7 +299,6 @@ body.game-active .dialog-box {
     display: none;
 }
 
-/* Add this CSS for the end game dialog box */
 .dialog-box#end-game-dialog {
     display: none;
 }
