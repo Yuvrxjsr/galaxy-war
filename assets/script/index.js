@@ -2,29 +2,29 @@
 
 class Score {
     #date;
-    #hits;
+    #points;
     #percentage;
 
-    constructor(date, hits, totalWords) {
+    constructor(date, points, totalWords) {
         this.#date = date;
-        this.#hits = hits;
-        this.#percentage = this.calculatePercentage(hits, totalWords);
+        this.#points = points;
+        this.#percentage = this.calculatePercentage(points, totalWords);
     }
 
     get date() {
         return this.#date;
     }
 
-    get hits() {
-        return this.#hits;
+    get points() {
+        return this.#points;
     }
 
     get percentage() {
         return this.#percentage;
     }
 
-    calculatePercentage(hits, totalWords) {
-        return totalWords === 0 ? 0 : ((hits / totalWords) * 100).toFixed(2);
+    calculatePercentage(points, totalWords) {
+        return totalWords === 0 ? 0 : ((points / totalWords) * 100).toFixed(2);
     }
 }
 
@@ -110,7 +110,39 @@ function playStartSound() {
 startButton.addEventListener('click', () => {
     playStartSound();
 
-    document.body.classList.add('game-active');
+    countdownDialog.style.display = 'block';
+
+    setTimeout(() => {
+        showCountdown(3);
+    }, 0);
+
+    setTimeout(() => {
+        showCountdown(2);
+    }, 1000);
+
+    setTimeout(() => {
+        showCountdown(1);
+
+        setTimeout(() => {
+            document.body.classList.add('game-active');
+            shuffleArray(words);
+            seconds = 99;
+            points = 0;
+            scoreElement.textContent = points.toString().padStart(2, '0');
+            displayNewWord();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                seconds--;
+                updateTimer();
+            }, 1000);
+
+            gameActive = true;
+            countdownDialog.style.display = 'none';
+        }, 1000);
+    }, 2000);
+});
+
+startAgainButton.addEventListener('click', () => {
     shuffleArray(words);
     seconds = 99;
     points = 0;
@@ -123,6 +155,9 @@ startButton.addEventListener('click', () => {
     }, 1000);
 
     gameActive = true;
+
+    endGameDialog.style.display = 'none';
+    document.body.classList.add('game-active');
 });
 
 function handleGameEnd() {
@@ -140,13 +175,9 @@ function handleGameEnd() {
 
     scoreDisplay.innerHTML = `
         <p>Date: ${score.date}</p>
-        <p>Hits: ${score.hits}</p>
+        <p>Points: ${score.points}</p>
         <p>Percentage: ${score.percentage}%</p>
     `;
-
-    startAgainButton.addEventListener('click', () => {
-        location.reload();
-    });
 }
 
 const restartButton = document.querySelector('.restart');
@@ -210,3 +241,19 @@ function updateTimer() {
 
 timerSound.preload = 'auto';
 timerSound.load();
+
+const countdownDialog = document.querySelector('.start-timer#countdown-dialog');
+
+function showCountdown(number) {
+    countdownDialog.textContent = number;
+    countdownDialog.style.display = 'block';
+
+    setTimeout(() => {
+        countdownDialog.style.opacity = '0';
+    }, 500);
+
+    setTimeout(() => {
+        countdownDialog.style.display = 'block';
+        countdownDialog.style.opacity = '1';
+    }, 1000);
+}
