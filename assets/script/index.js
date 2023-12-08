@@ -22,6 +22,8 @@ const words = [
 const endGameDialog = document.querySelector('.dialog-box#end-game-dialog');
 const scoreDisplay = endGameDialog.querySelector('.score-display');
 const startAgainButton = endGameDialog.querySelector('.start-again');
+const backButton = document.getElementById('backButton');
+const scoreboardDialog = document.querySelector('.dialog-box#scoreboard-dialog');
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -181,7 +183,7 @@ restartButton.addEventListener('click', () => {
     shuffleArray(words);
     seconds = 21;
     points = 0;
-    scoreElement.textContent = points.toString().padStart(2, '0'); // Format points as two digits
+    scoreElement.textContent = points.toString().padStart(2, '0');
     displayNewWord();
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
@@ -251,8 +253,8 @@ function getScoresFromStorage() {
 function updateScoresInStorage(score) {
     const scores = getScoresFromStorage();
     scores.push(score);
-    scores.sort((a, b) => b.points - a.points); // Sort scores in descending order
-    const topScores = scores.slice(0, 10); // Get the top 10 scores
+    scores.sort((a, b) => b.points - a.points);
+    const topScores = scores.slice(0, 10);
     localStorage.setItem('scores', JSON.stringify(topScores));
 }
 
@@ -260,16 +262,18 @@ function showScoreboard() {
     const scores = getScoresFromStorage();
     const scoreboardTable = document.querySelector('#scoreboard-table');
 
-    // Clear previous entries
     scoreboardTable.innerHTML = '';
 
-    // Create and append table rows for each score
     scores.forEach((score, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${index + 1}</td>.<td>${score.date}</td>&nbsp;<td>${score.points}</td>&nbsp;<td>${score.percentage}%</td>`;
         scoreboardTable.appendChild(row);
     });
 
-    // Display the scoreboard
     scoreboardTable.style.display = 'block';
 }
+
+backButton.addEventListener('click', () => {
+    scoreboardDialog.style.display = 'none';
+    endGameDialog.style.display = 'block';
+});
