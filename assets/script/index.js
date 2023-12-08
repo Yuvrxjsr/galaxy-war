@@ -1,32 +1,6 @@
 'use strict';
 
-class Score {
-    #date;
-    #points;
-    #percentage;
-
-    constructor(date, points, totalWords) {
-        this.#date = date;
-        this.#points = points;
-        this.#percentage = this.calculatePercentage(points, totalWords);
-    }
-
-    get date() {
-        return this.#date;
-    }
-
-    get points() {
-        return this.#points;
-    }
-
-    get percentage() {
-        return this.#percentage;
-    }
-
-    calculatePercentage(points, totalWords) {
-        return totalWords === 0 ? 0 : ((points / totalWords) * 100).toFixed(2);
-    }
-}
+import Score from './score.js';
 
 const words = [
     'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -128,7 +102,7 @@ startButton.addEventListener('click', () => {
         setTimeout(() => {
             document.body.classList.add('game-active');
             shuffleArray(words);
-            seconds = 99;
+            seconds = 20;
             points = 0;
             scoreElement.textContent = points.toString().padStart(2, '0');
             displayNewWord();
@@ -145,9 +119,21 @@ startButton.addEventListener('click', () => {
     }, 2000);
 });
 
+
+const scoreboardButton = document.querySelector('.scoreboard-b');
+
+scoreboardButton.addEventListener('click', () => {
+    const scoreboardTable = document.querySelector('#scoreboard-dialog');
+    scoreboardTable.style.display = 'block';
+
+    endGameDialog.style.display = 'none';
+
+    showScoreboard();
+});
+
 startAgainButton.addEventListener('click', () => {
     shuffleArray(words);
-    seconds = 99;
+    seconds = 21;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0');
     displayNewWord();
@@ -161,6 +147,8 @@ startAgainButton.addEventListener('click', () => {
 
     endGameDialog.style.display = 'none';
     document.body.classList.add('game-active');
+
+    showScoreboard();
 });
 
 function handleGameEnd() {
@@ -174,7 +162,9 @@ function handleGameEnd() {
     endGameDialog.style.display = 'block';
 
     const currentDate = new Date().toLocaleDateString();
-    const score = new Score(currentDate, points, words.length);
+    const score = { date: currentDate, points, percentage: ((points / words.length) * 100).toFixed(2) };
+
+    updateScoresInStorage(score);
 
     scoreDisplay.innerHTML = `
         <p>Date: ${score.date}</p>
@@ -189,7 +179,7 @@ const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', () => {
     document.body.classList.add('game-active');
     shuffleArray(words);
-    seconds = 99;
+    seconds = 21;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0'); // Format points as two digits
     displayNewWord();
@@ -234,16 +224,6 @@ function playTimerSound() {
     timerSound.play();
 }
 
-function updateTimer() {
-    timerElement.textContent = seconds;
-
-    if (seconds === 0 || words.length === 0) {
-        clearInterval(timerInterval);
-        playTimerSound();
-        handleGameEnd(true);
-    }
-}
-
 timerSound.preload = 'auto';
 timerSound.load();
 
@@ -261,4 +241,35 @@ function showCountdown(number) {
         countdownDialog.style.display = 'block';
         countdownDialog.style.opacity = '1';
     }, 1000);
+}
+
+function getScoresFromStorage() {
+    const storedScores = localStorage.getItem('scores');
+    return storedScores ? JSON.parse(storedScores) : [];
+}
+
+function updateScoresInStorage(score) {
+    const scores = getScoresFromStorage();
+    scores.push(score);
+    scores.sort((a, b) => b.points - a.points); // Sort scores in descending order
+    const topScores = scores.slice(0, 10); // Get the top 10 scores
+    localStorage.setItem('scores', JSON.stringify(topScores));
+}
+
+function showScoreboard() {
+    const scores = getScoresFromStorage();
+    const scoreboardTable = document.querySelector('#scoreboard-table');
+
+    // Clear previous entries
+    scoreboardTable.innerHTML = '';
+
+    // Create and append table rows for each score
+    scores.forEach((score, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${index + 1}</td>.<td>${score.date}</td>&nbsp;<td>${score.points}</td>&nbsp;<td>${score.percentage}%</td>`;
+        scoreboardTable.appendChild(row);
+    });
+
+    // Display the scoreboard
+    scoreboardTable.style.display = 'block';
 }

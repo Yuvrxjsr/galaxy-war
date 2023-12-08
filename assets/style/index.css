@@ -46,21 +46,19 @@ section {
 }
 
 .score-board {
-    background: linear-gradient(45deg, #2149ee, #9f5598);
+    background-color: #f0f8ff;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    height: 20px;
-    display: flex;
-    justify-content: end;
 }
 
 .timer {
+    margin-top: 30px;
     width: 65px;
     height: 65px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #2149ee, #9f5598);
-    color: #f0f8ff;
+    background-color: #f0f8ff;
+    color: #000;
 }
 
 .timer p {
@@ -71,7 +69,7 @@ section {
 }
 
 .display-words {
-    margin-top: 50px;
+    margin-top: 30px;
     width: 400px;
     height: 150px;
     background: linear-gradient(45deg, #2149ee, #9f5598);
@@ -108,7 +106,6 @@ input {
 }
 
 .restart:hover {
-    background: linear-gradient(45deg, #2149ee, #9f5598);
     background-size: 400%;
     z-index: 1;
     animation: glow-02 4s linear infinite;
@@ -249,7 +246,6 @@ input {
 }
 
 .dialog-box button:hover {
-    background: linear-gradient(45deg, #2149ee, #9f5598);
     background-size: 400%;
     z-index: 1;
     animation: glow-02 4s linear infinite;
@@ -300,6 +296,10 @@ body.game-active .dialog-box {
 }
 
 .dialog-box#end-game-dialog {
+    display: none;
+}
+
+.dialog-box#scoreboard-dialog {
     display: none;
 }
 
