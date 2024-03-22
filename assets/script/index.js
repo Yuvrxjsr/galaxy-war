@@ -104,7 +104,7 @@ startButton.addEventListener('click', () => {
         setTimeout(() => {
             document.body.classList.add('game-active');
             shuffleArray(words);
-            seconds = 20;
+            seconds = 100;
             points = 0;
             scoreElement.textContent = points.toString().padStart(2, '0');
             displayNewWord();
@@ -135,7 +135,7 @@ scoreboardButton.addEventListener('click', () => {
 
 startAgainButton.addEventListener('click', () => {
     shuffleArray(words);
-    seconds = 21;
+    seconds = 101;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0');
     displayNewWord();
@@ -181,7 +181,7 @@ const restartButton = document.querySelector('.restart');
 restartButton.addEventListener('click', () => {
     document.body.classList.add('game-active');
     shuffleArray(words);
-    seconds = 21;
+    seconds = 101;
     points = 0;
     scoreElement.textContent = points.toString().padStart(2, '0');
     displayNewWord();
